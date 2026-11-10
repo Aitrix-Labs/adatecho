@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Speak to an expert | Adatecho</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preload" href="../assets/7d14eea390898fca.woff2" as="font" type="font/woff2" crossorigin="" />
+  <link rel="preload" href="../assets/42690f2bfe317b8e.woff2" as="font" type="font/woff2" crossorigin="" />
+  <link rel="stylesheet" href="../assets/_slug_.CDaHifTo.css" />
+  <link rel="stylesheet" href="../assets/_slug_.Cfru3zyi.css" />
+  <link rel="stylesheet" href="../assets/index.Dw49YcCf.css" />
+  <link rel="stylesheet" href="../assets/index.C2ho-sh3.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { background: #050505; min-height: 100%; margin: 0; overflow-x: hidden; }
+    .contact-page { color: var(--color-ink-1, #f9f9f9); }
+    .contact-shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 48px;
+    }
+    .contact-grid {
+      display: grid;
+      gap: 36px;
+    }
+    @media (min-width: 640px) {
+      .contact-shell { width: min(1120px, calc(100% - 48px)); padding: 80px 0 72px; }
+      .contact-grid { gap: 48px; }
+    }
+    @media (min-width: 960px) {
+      .contact-shell { padding: 120px 0 96px; }
+      .contact-grid { grid-template-columns: 1.05fr 0.95fr; align-items: start; gap: 72px; }
+    }
+    .contact-eyebrow {
+      color: #9a9a9a;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .contact-title {
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 400;
+      margin: 0 0 20px;
+      text-wrap: balance;
+    }
+    .contact-lede {
+      color: #bdbdbd;
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 36rem;
+      margin: 0 0 36px;
+    }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+    .contact-list li {
+      color: #d8d8d8;
+      font-size: 15px;
+      line-height: 1.45;
+      padding-left: 22px;
+      position: relative;
+    }
+    .contact-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #c8d5b0;
+    }
+    .contact-card {
+      border: 1px solid rgba(249, 249, 249, 0.12);
+      background: rgba(20, 20, 22, 0.92);
+      border-radius: 20px;
+      padding: 22px;
+    }
+    @media (min-width: 640px) {
+      .contact-card { border-radius: 24px; padding: 28px; }
+    }
+    .contact-card h2 {
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin: 0 0 20px;
+      font-weight: 500;
+    }
+    .contact-form { display: grid; gap: 16px; }
+    .contact-form label,
+    .contact-field {
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      color: #cfcfcf;
+    }
+    .contact-field-label { color: #cfcfcf; }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      border: 1px solid rgba(249, 249, 249, 0.16);
+      background: #0d0d0f;
+      color: #f9f9f9;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 15px;
+      outline: none;
+    }
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(200, 213, 176, 0.7);
+    }
+    .contact-form textarea { min-height: 120px; resize: vertical; }
+    .contact-select { position: relative; }
+    .contact-select-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid rgba(249, 249, 249, 0.16);
+      background: #0d0d0f;
+      color: #f9f9f9;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 15px;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+    }
+    .contact-select-btn[data-placeholder="true"] { color: #8f8f8f; }
+    .contact-select-btn:focus {
+      border-color: rgba(200, 213, 176, 0.7);
+    }
+    .contact-select-btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      opacity: 0.7;
+      transition: transform 0.15s ease;
+    }
+    .contact-select.is-open .contact-select-btn svg { transform: rotate(180deg); }
+    .contact-select-menu {
+      display: none;
+      position: absolute;
+      z-index: 30;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      margin: 0;
+      padding: 6px;
+      list-style: none;
+      border: 1px solid rgba(249, 249, 249, 0.16);
+      background: #121214;
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      max-height: min(240px, 45vh);
+      overflow: auto;
+    }
+    .contact-select.is-open .contact-select-menu { display: block; }
+    .contact-select.is-up .contact-select-menu {
+      top: auto;
+      bottom: calc(100% + 6px);
+    }
+    .contact-select-menu li button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #f9f9f9;
+      font: inherit;
+      font-size: 15px;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .contact-select-menu li button:hover,
+    .contact-select-menu li button[aria-selected="true"] {
+      background: rgba(249, 249, 249, 0.08);
+    }
+    .contact-form button[type="submit"] {
+      margin-top: 4px;
+      border: 0;
+      border-radius: 999px;
+      background: #c8d5b0;
+      color: #111;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 22px;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      width: 100%;
+    }
+    @media (min-width: 640px) {
+      .contact-form button[type="submit"] { width: auto; }
+    }
+    .contact-form button[type="submit"]:hover { filter: brightness(1.08); }
+    .contact-form button[type="submit"]:active { transform: scale(0.98); }
+    .contact-note {
+      color: #8f8f8f;
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 4px 0 0;
+    }
+    .contact-success {
+      display: none;
+      color: #d8d8d8;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .contact-card.is-sent .contact-form { display: none; }
+    .contact-card.is-sent .contact-success { display: block; }
+    .contact-top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 16px 0;
+    }
+    .contact-nav {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(249, 249, 249, 0.12);
+      border-radius: 999px;
+      background: rgba(14, 14, 16, 0.88);
+      backdrop-filter: blur(16px);
+      position: relative;
+    }
+    .contact-nav a.home {
+      display: inline-flex;
+      align-items: center;
+      line-height: 0;
+      margin-right: auto;
+      min-width: 0;
+    }
+    .contact-nav a.home img {
+      display: block;
+      height: 18px;
+      width: auto;
+      max-width: 120px;
+    }
+    .contact-menu-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 0;
+      background: rgba(249, 249, 249, 0.08);
+      color: #f9f9f9;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .contact-menu-btn svg { display: block; pointer-events: none; }
+    .contact-menu-btn .icon-close { display: none; }
+    .contact-nav.is-open .contact-menu-btn .icon-menu { display: none; }
+    .contact-nav.is-open .contact-menu-btn .icon-close { display: block; }
+    .contact-nav-links {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 10px);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid rgba(249, 249, 249, 0.12);
+      border-radius: 20px;
+      background: rgba(14, 14, 16, 0.96);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    }
+    .contact-nav.is-open .contact-nav-links { display: flex; }
+    .contact-nav-links a {
+      color: #d8d8d8;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+    }
+    .contact-nav-links a:hover,
+    .contact-nav-links a[aria-current="page"] { color: #fff; background: rgba(249,249,249,0.06); }
+    .contact-nav .back {
+      color: #0a0a0a;
+      background: #c8d5b0;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .contact-nav .back:hover { filter: brightness(1.06); }
+    .contact-nav .back .cta-full { display: none; }
+    .contact-nav .back .cta-short { display: inline; }
+    .contact-site-footer { margin-top: 40px; }
+    .contact-site-footer footer img[alt="Adatecho"] {
+      width: 100% !important;
+      max-width: 40rem !important;
+      height: auto !important;
+    }
+    @media (min-width: 640px) {
+      .contact-top { padding: 18px 24px 0; }
+      .contact-nav { gap: 14px; padding: 12px 18px; }
+      .contact-nav a.home img { height: 20px; max-width: 160px; }
+      .contact-nav .back { padding: 8px 14px; }
+      .contact-nav .back .cta-full { display: inline; }
+      .contact-nav .back .cta-short { display: none; }
+    }
+    @media (min-width: 900px) {
+      .contact-menu-btn { display: none; }
+      .contact-nav-links {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      .contact-nav-links a { font-size: 13px; padding: 8px 10px; white-space: nowrap; }
+      .contact-site-footer { margin-top: 48px; }
+    }
+  </style>
+</head>
+<body class="contact-page reskin">
+  <header class="contact-top">
+    <div class="contact-nav" data-page-nav>
+      <a class="home" href="/adatecho/" aria-label="Adatecho home">
+        <img src="../assets/adatecho-wordmark.svg" alt="Adatecho" width="84" height="20" />
+      </a>
+      <nav class="contact-nav-links" aria-label="Primary">
+        <a href="/adatecho/platform/">Platform</a>
+        <a href="/adatecho/industry/ecommerce/">Industries</a>
+        <a href="/adatecho/case-studies/">Customers</a>
+        <a href="/adatecho/resources/">Resources</a>
+        <a href="/adatecho/why-ada/">Why Adatecho</a>
+        <a href="/adatecho/contact/" aria-current="page">Contact</a>
+      </nav>
+      <a class="back" href="/adatecho/"><span class="cta-short">Home</span><span class="cta-full">Back to home</span></a>
+      <button type="button" class="contact-menu-btn" aria-label="Toggle menu" aria-expanded="false" data-page-menu>
+        <svg class="icon-menu" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        <svg class="icon-close" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="contact-shell">
+    <div class="contact-grid">
+      <div>
+        <div class="contact-eyebrow">Contact</div>
+        <h1 class="contact-title">Speak to an expert</h1>
+        <p class="contact-lede">
+          Tell us about your CX goals and we’ll show how Adatecho can help lift CSAT,
+          scale support, and drive better customer outcomes.
+        </p>
+        <p class="contact-eyebrow" style="margin-bottom: 14px;">What we’ll cover</p>
+        <ul class="contact-list">
+          <li>Your customer experience today: channels, performance, and goals</li>
+          <li>Where AI agents can raise CSAT and resolve more for your customers</li>
+          <li>A custom walkthrough built around your most important use cases</li>
+          <li>The business case: savings, scalability, and an implementation plan</li>
+        </ul>
+      </div>
+
+      <div class="contact-card" id="contact-card">
+        <h2>Schedule a conversation</h2>
+        <form class="contact-form" id="contact-form">
+          <label>
+            Full name *
+            <input name="name" autocomplete="name" required placeholder="Your name" />
+          </label>
+          <label>
+            Business email *
+            <input type="email" name="email" autocomplete="email" required placeholder="Business Email" />
+          </label>
+          <label>
+            Company *
+            <input name="company" autocomplete="organization" required placeholder="Company name" />
+          </label>
+          <div class="contact-field">
+            <span class="contact-field-label">Annual customer support ticket volume *</span>
+            <div class="contact-select" data-select>
+              <input type="hidden" name="volume" value="" required />
+              <button type="button" class="contact-select-btn" data-placeholder="true" aria-haspopup="listbox" aria-expanded="false">
+                <span data-select-label>Please Select</span>
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <ul class="contact-select-menu" role="listbox">
+                <li><button type="button" role="option" data-value="I don't know">I don't know</button></li>
+                <li><button type="button" role="option" data-value="less than 50K">less than 50K</button></li>
+                <li><button type="button" role="option" data-value="50K-99K">50K-99K</button></li>
+                <li><button type="button" role="option" data-value="100K-249K">100K-249K</button></li>
+                <li><button type="button" role="option" data-value="250K - 999K">250K - 999K</button></li>
+                <li><button type="button" role="option" data-value="1M-10M">1M-10M</button></li>
+                <li><button type="button" role="option" data-value="10M+">10M+</button></li>
+              </ul>
+            </div>
+          </div>
+          <label>
+            How can we help?
+            <textarea name="message" placeholder="Share goals, channels, or timelines"></textarea>
+          </label>
+          <button type="submit">Speak to an expert</button>
+          <p class="contact-note">We’ll reach out within one business day to schedule a 30-minute call.</p>
+        </form>
+        <p class="contact-success" id="contact-success">
+          Thanks — an Adatecho expert will reach out shortly.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <div class="contact-site-footer">
+    <!--SITE_FOOTER-->
+  </div>
+
+  <script>
+    const form = document.getElementById('contact-form')
+    const card = document.getElementById('contact-card')
+    const select = document.querySelector('[data-select]')
+    const trigger = select.querySelector('.contact-select-btn')
+    const label = select.querySelector('[data-select-label]')
+    const hidden = select.querySelector('input[name="volume"]')
+    const menu = select.querySelector('.contact-select-menu')
+
+    const closeSelect = () => {
+      select.classList.remove('is-open')
+      trigger.setAttribute('aria-expanded', 'false')
+    }
+
+    trigger.addEventListener('click', () => {
+      const open = !select.classList.contains('is-open')
+      if (open) {
+        const spaceBelow = window.innerHeight - trigger.getBoundingClientRect().bottom
+        select.classList.toggle('is-up', spaceBelow < 220)
+      }
+      select.classList.toggle('is-open', open)
+      trigger.setAttribute('aria-expanded', String(open))
+    })
+
+    menu.querySelectorAll('[data-value]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = btn.dataset.value
+        hidden.value = value
+        label.textContent = value
+        trigger.dataset.placeholder = 'false'
+        menu.querySelectorAll('[role="option"]').forEach((opt) => {
+          opt.setAttribute('aria-selected', String(opt === btn))
+        })
+        closeSelect()
+      })
+    })
+
+    document.addEventListener('click', (e) => {
+      if (!select.contains(e.target)) closeSelect()
+    })
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      if (!hidden.value) {
+        trigger.focus()
+        select.classList.add('is-open')
+        trigger.setAttribute('aria-expanded', 'true')
+        return
+      }
+      card.classList.add('is-sent')
+    })
+
+    ;(() => {
+      const root = document.querySelector('[data-page-nav]')
+      const btn = document.querySelector('[data-page-menu]')
+      if (!root || !btn) return
+      const sync = (open) => {
+        root.classList.toggle('is-open', open)
+        btn.setAttribute('aria-expanded', String(open))
+      }
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation()
+        sync(!root.classList.contains('is-open'))
+      })
+      document.addEventListener('click', (e) => {
+        if (!root.contains(e.target)) sync(false)
+      })
+      window.addEventListener('resize', () => {
+        if (window.matchMedia('(min-width: 900px)').matches) sync(false)
+      })
+    })()
+  </script>
+</body>
+</html>
