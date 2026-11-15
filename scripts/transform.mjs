@@ -19,29 +19,31 @@ for (const file of fs.readdirSync(assets)) {
 let html = fs.readFileSync(path.join(assets, 'ada-raw.html'), 'utf8')
 const imageMap = JSON.parse(fs.readFileSync(path.join(assets, 'image-map.json'), 'utf8'))
 
+const trackingRe =
+  /zaraz|zarazData|VWO|Wingify|visualwebsiteoptimizer|_vwo|apollo\.io|trackingFunctions|dreamdata|herbstars|cheq4ppc|zi-scripts|zoominfo|googleads|googletagmanager|gtag\/js|doubleclick|adsrvr|vector\.co|clarity|hubspot|hs-script|hs-analytics|hs-banner|bat\.bing|licdn\.com|g2crowd|clickagy|aorta\.clickagy|cr-relay\.com|signals\.js|cdn-cgi\/zaraz|cloudflareinsights|beacon\.min\.js|aplo-evnt/i
+
 html = html
   .replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->/g, '')
   .replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '')
   .replace(/<!-- Start VWO Async SmartCode -->[\s\S]*?<!-- End VWO Async SmartCode -->/g, '')
-  .replace(/<script[^>]*googletagmanager[^>]*>[\s\S]*?<\/script>/gi, '')
-  .replace(/<script[^>]*gtag\/js[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*hs-script[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*hubspot[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*hs-analytics[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*hs-banner[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*clarity[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*dreamdata[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*vector\.co[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*clickagy[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*adsrvr[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*bat\.bing[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*licdn\.com[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*g2crowd[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*zaraz[^>]*><\/script>/gi, '')
-  .replace(/<script[^>]*cdn-cgi\/zaraz[^>]*><\/script>/gi, '')
-  .replace(/<script data-cfasync[\s\S]*?<\/script>/gi, '')
-  .replace(/<img[^>]*aorta\.clickagy[^>]*>/gi, '')
-  .replace(/<script type="module" src="\/_astro\/page\.[^"]+"><\/script>/g, '')
+  // Drop Ada's third-party dump scripts (Zaraz/VWO/etc). Partial strips leave
+  // zarazData.executed / Worker onmessage crashes and Vite rewrites blob: URLs
+  // into invalid blob:/adatecho/... paths.
+  .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, (block) => {
+    if (/\ssrc=["']blob:/i.test(block)) return ''
+    if (/src=["']\/_astro\/page\./i.test(block)) return ''
+    if (trackingRe.test(block)) return ''
+    return block
+  })
+  .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, (block) =>
+    trackingRe.test(block) ? '' : block,
+  )
+  .replace(/<iframe\b[^>]*\/?>/gi, (block) => (trackingRe.test(block) ? '' : block))
+  .replace(/<img\b[^>]*>/gi, (block) => (trackingRe.test(block) ? '' : block))
+  .replace(/<link\b[^>]*>/gi, (block) => {
+    if (/modulepreload/i.test(block)) return block
+    return trackingRe.test(block) ? '' : block
+  })
 
 const asset = (name) => `./assets/${name}`
 const wordmark = asset('adatecho-wordmark.svg')
