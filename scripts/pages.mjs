@@ -75,7 +75,7 @@ function escapeHtml(s) {
     .replaceAll('"', '&quot;')
 }
 
-export function renderPage({ path: routePath, title, eyebrow, lede }, { base = '/adatecho' } = {}) {
+export function renderPage({ path: routePath, title, eyebrow, lede }, { base = '' } = {}) {
   const depth = routePath.split('/').filter(Boolean).length
   const rel = '../'.repeat(depth)
   const home = `${base}/`

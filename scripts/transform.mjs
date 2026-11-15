@@ -7,7 +7,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, '..')
 const assets = path.join(root, 'public', 'assets')
 const outDir = path.join(root, 'site')
-const base = '/adatecho'
+// Custom domain adatecho.com serves at `/`. Using `/adatecho` made every
+// asset request hit `/adatecho/assets/...` → 404 on production.
+const base = ''
 
 fs.mkdirSync(outDir, { recursive: true })
 fs.mkdirSync(path.join(outDir, 'assets'), { recursive: true })
@@ -33,6 +35,17 @@ html = html
     if (/\ssrc=["']blob:/i.test(block)) return ''
     if (/src=["']\/_astro\/page\./i.test(block)) return ''
     if (trackingRe.test(block)) return ''
+    // Obfuscated ZoomInfo + Zaraz stubs that call document.body.appendChild
+    // from <head> before body exists → "Cannot read properties of null".
+    if (
+      /appendChild\(zi\)|batBeacon|fromCharCode\(a\).*atob|atob\([^)]+\).*fromCharCode/i.test(
+        block,
+      ) ||
+      (/document\.body\.appendChild/i.test(block) &&
+        !/alpine|adatecho|MutationObserver|data-scene|form-submit/i.test(block))
+    ) {
+      return ''
+    }
     return block
   })
   .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe>/gi, (block) =>
@@ -44,6 +57,7 @@ html = html
     if (/modulepreload/i.test(block)) return block
     return trackingRe.test(block) ? '' : block
   })
+  .replace(/<div[^>]*id="batBeacon[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '')
 
 const asset = (name) => `./assets/${name}`
 const wordmark = asset('adatecho-wordmark.svg')
@@ -145,13 +159,10 @@ html = html
   .replaceAll(' ada + ', ' adatecho + ')
   .replaceAll('ada + dialpad', 'adatecho + dialpad')
 
-// Root-absolute site links (/login/, /platform/, …) must include Vite base
-// or the dev server responds with "did you mean /adatecho/…?".
-// Do NOT pre-prefix asset URLs (.svg, .mp4, …) — Vite's HTML transform already
-// joins `base` onto those, and double-prefixing yields /adatecho/adatecho/…
-// (broken badge images in the Trusted-by section).
+// Normalize root-absolute site links. Skip protocol-relative (//) and files
+// with extensions — Vite already rebases those via `base`.
 html = html.replace(
-  /\b(href|src|action)=["']\/(?!\/|adatecho\/)([^"']*)["']/g,
+  /\b(href|src|action)=["']\/(?!\/)([^"']*)["']/g,
   (full, attr, path) => {
     if (/\.[a-z0-9]{2,5}([?#]|$)/i.test(path)) return full
     return `${attr}="${base}/${path}"`
@@ -164,7 +175,7 @@ html = html.replaceAll(`${base}/demo`, `${base}/contact/`)
 
 // Add Contact to the header nav (before Sign in).
 html = html.replace(
-  /(<a href="\/adatecho\/login\/"[^>]*>\s*Sign in\s*<\/a>)/i,
+  /(<a href="\/login\/"[^>]*>\s*Sign in\s*<\/a>)/i,
   `<a href="${base}/contact/" class="text-sm ease-ada inline-flex cursor-pointer items-center justify-center gap-12 rounded-full text-center leading-none transition-[background,border-color,filter,transform] duration-200 active:scale-[0.96] border-line text-ink-1 hover:border-tint/34 border bg-transparent hover:bg-tint/5 px-24 py-12 max-lg:w-full">Contact </a> $1`,
 )
 

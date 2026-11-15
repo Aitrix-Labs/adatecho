@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open: http://localhost:5181/adatecho/
+Open: http://localhost:5181/
 
 ## Scripts
 
